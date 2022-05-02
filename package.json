@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/faustAbc/node-huseu/issues"
   },
-  "homepage": "https://github.com/faustAbc/node-huseu#readme"
+  "homepage": "https://github.com/faustAbc/node-huseu#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  }
 }
