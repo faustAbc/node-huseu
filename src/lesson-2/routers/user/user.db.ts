@@ -1,6 +1,7 @@
 import { User, UserSearchOptions } from './user.types';
 import { nanoid } from 'nanoid';
 import faker from '@faker-js/faker';
+import createError from 'http-errors';
 
 class UserDB {
   users: User[];
@@ -19,8 +20,8 @@ class UserDB {
     return this.users.find((user) => user.id === id);
   }
 
-  createUser(newUser: Omit<User, 'id'>) {
-    const user = { id: nanoid(), ...newUser };
+  createUser(newUser: Pick<User, 'age' | 'login' | 'password'>) {
+    const user: User = { ...newUser, id: nanoid(), isDeleted: false };
     this.users.push(user);
     return user;
   }
@@ -39,7 +40,11 @@ class UserDB {
     const user = this.users.find((user) => user.id === id);
 
     if (!user) {
-      throw new Error('No user');
+      throw new createError.NotFound('User not found');
+    }
+
+    if (user.isDeleted) {
+      throw new createError.BadRequest('User already deleted');
     }
 
     user.isDeleted = true;
@@ -52,7 +57,7 @@ class UserDB {
     top = 1e2,
     search,
   }: UserSearchOptions) {
-    let users = this.users;
+    let users = this.users.filter((user) => !user.isDeleted);
     const typedSortField = sortFiled as keyof User;
 
     users.sort(

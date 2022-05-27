@@ -1,20 +1,30 @@
-import express from 'express';
-import userRouter from './controllers/user/user.controller';
 import * as bodyParser from 'body-parser';
+import * as middlewares from './middlewares';
+import * as config from './config';
+import express, { Router } from 'express';
+import userRouter from './routers/user/user.router';
+import { useMiddlewares } from './middlewares';
+import { useRoutes } from './routers';
 
 const appRouter = express.Router();
 
-([['user', userRouter]] as const).forEach(([name, router]) => {
-  appRouter.use(name, router);
-});
+const routerConfig: [string, Router][] = [['/user', userRouter]];
 
 const server = express();
 
-server.use('/api/v1', userRouter);
 server.use(bodyParser.json());
+server.use(config.API_PREFIX, appRouter);
 
-server.listen(3000).on('listening', () => {
-  console.log('Server started on port 3000');
+useRoutes(appRouter, routerConfig);
+
+useMiddlewares(server, [
+  middlewares.errorLogger,
+  middlewares.errorResponder,
+  middlewares.invalidPathHandler,
+]);
+
+server.listen(config.PORT).on('listening', () => {
+  console.log(`Server started on port ${config.PORT}`);
 });
 
 export default server;

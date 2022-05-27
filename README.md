@@ -7,3 +7,7 @@
 ```sh
 nvm use
 ```
+
+## Server for lesson 2 startup instructions
+
+`npm run server`
