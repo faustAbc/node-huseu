@@ -2,3 +2,6 @@ npm-debug.log*
 .npm
 .eslintcache
 node_modules/
+
+src/task-2/json/
+lib/
