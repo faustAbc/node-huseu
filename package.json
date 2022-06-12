@@ -5,9 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "babel src --out-dir lib --extensions \".ts,.tsx\"",
-    "task1": "nodemon ./src/lesson-1/task-1/index.ts",
-    "task2": "nodemon ./src/lesson-1/task-2/index.ts",
-    "server": "nodemon ./src/lesson-2/index.ts"
+    "dev": "nodemon ./index.ts"
   },
   "repository": {
     "type": "git",

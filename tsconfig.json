@@ -9,7 +9,7 @@
     "declaration": true,
     "experimentalDecorators": true
   },
-  "include": ["src"],
+  "include": ["src", "index.ts"],
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs"

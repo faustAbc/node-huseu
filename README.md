@@ -8,6 +8,6 @@
 nvm use
 ```
 
-## Server for lesson 2 startup instructions
+## Startup instructions
 
-`npm run server`
+`npm run dev`
